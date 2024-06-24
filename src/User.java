@@ -1,13 +1,13 @@
 public class User {
         private int level;
         private String mail;
-        private String username;
+        String username;
         private String password;
-        private short sec_question;
+        private String sec_question;
         private String sec_answer;
         private String nickname;
 
-    public User(String mail, String username, String password, short sec_question, String sec_answer,String nickname) {
+    public User(String mail, String username, String password, String sec_question, String sec_answer,String nickname) {
         this.mail = mail;
         this.username = username;
         this.password = password;
