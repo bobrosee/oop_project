@@ -1,7 +1,5 @@
 import java.util.*;
 import java.util.regex.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 public class InputOutput {
     Scanner scanner;
 
@@ -12,7 +10,7 @@ public class InputOutput {
     {
         String entry;
         entry = scanner.nextLine();
-        Pattern[] patterns = new Pattern[9];
+        Pattern[] patterns = new Pattern[10];
         patterns[0] = Pattern.compile("^user create -u \\S+ -p \\S{8,} \\S{8,} -email \\S+@\\S+.com -n \\S+$");
         patterns[1] = Pattern.compile("^user login -u \\S+ -p \\S+$");
         patterns[2] = Pattern.compile("^Forgot my password -u \\S+$");
@@ -22,9 +20,10 @@ public class InputOutput {
         patterns[6] = Pattern.compile("^Profile change -n \\S+$");
         patterns[7] = Pattern.compile("^Profile change -e \\S+$");
         patterns[8] = Pattern.compile("^Profile change password -o \\S+ -n \\S+$");
+        patterns[9] = Pattern.compile("^-login admin adminpass$");
 
 
-        Matcher[] matchers = new Matcher[9];
+        Matcher[] matchers = new Matcher[10];
         while(!entry.equals("Exit"))
         {
         for(int i = 0; i < matchers.length; i++)
@@ -76,26 +75,16 @@ public class InputOutput {
         else if (matchers[8].find()) {
             changePass(entry.split("\\s+"));
         }
+        else if(matchers[9].find())
+        {
+            Admin.starts();
+        }
 
 
             entry = scanner.nextLine();
 
         }
     }
-    // sign up barb
-//    public void signup(String[] inputs)
-//    {
-//        if(!inputs[3].matches("[a-zA-Z0-9_]+"))
-//        {
-//            System.out.println("Invalid Username");
-//        }
-//        else if(!inputs[5].equals(inputs[6]))
-//        {
-//            System.out.println("Passwords do not match");
-//        }
-//
-//    }
-
     public void login(String[] inputs)
     {
         Boolean flag = false;
@@ -329,7 +318,7 @@ public class InputOutput {
         String answer = newMatcher.group("Answer");
         String answerConfirmation = newMatcher.group("AnswerConfirmation");
         System.out.println(questionNumber + " " + answer + " " + answerConfirmation);
-        User newUser = new User(email, username, password, questionNumber, answer, answerConfirmation);
+        User newUser = new User(email, username, password, questionNumber, answer, nickname);
         User.users.add(newUser);
     }
 
@@ -356,10 +345,10 @@ public class InputOutput {
         System.out.println("HI");
         String[] passwords = new String[5];
         passwords[0] = "K05xher4g3";
-        passwords[1] = "fhn13ca01";
-        passwords[2] = "ionffvbe1";
-        passwords[3] = "mbcpa2179";
-        passwords[4] = "nompngh0982";
+        passwords[1] = "fHn13ca01";
+        passwords[2] = "ioNffvbe1";
+        passwords[3] = "mBcpa2179";
+        passwords[4] = "nompNgh0982";
         int indicator = (int)Math.floor(Math.random() * 5);
         String password = passwords[indicator];
         System.out.println("Your random password: " + password);
@@ -382,7 +371,7 @@ public class InputOutput {
         String questionNumber = newMatcher.group("QuestionNumber");
         String answer = newMatcher.group("Answer");
         String answerConfirmation = newMatcher.group("AnswerConfirmation");
-        User newUser = new User(email, username, password, questionNumber, answer, answerConfirmation);
+        User newUser = new User(email, username, password, questionNumber, answer, nickname);
         User.users.add(newUser);
     }
     public static Matcher getCommandMatcher(String input, String regex)
