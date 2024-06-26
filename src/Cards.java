@@ -14,5 +14,4 @@ public class Cards {
         this.upgrade_level = upgrade_level;
         this.upgrade_cost = upgrade_cost;
     }
-
 }
