@@ -8,6 +8,7 @@ public class User {
         private String sec_question;
         private String sec_answer;
         private String nickname;
+        int coins;
         public Boolean login = false;
         static ArrayList<User> users = new ArrayList<>();
         static int logged = -1;
@@ -19,6 +20,7 @@ public class User {
         this.sec_answer = sec_answer;
         this.nickname = nickname;
         this.level = 1;
+        this.coins = 1000;
     }
 
     public String getMail() {

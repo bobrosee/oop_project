@@ -3,14 +3,14 @@ import java.util.regex.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 public class InputOutput {
-    Scanner scanner;
+    static Scanner scanner;
     User firstUser = null;
     User secondUser = null;
 
     public InputOutput(Scanner scanner) {
         this.scanner = scanner;
     }
-    public boolean asciiArt() {
+    public static boolean asciiArt() {
         String[] firstLineAscii =  {"000000", "1111  ","222222", "333333", "44  44", "555555", "666666", "777777", "888888", "999999"};
         String[] secondLineAscii = {"00  00", "  11  ","     2", "    33", "44  44", "55    ", "66    ", "    77", "88  88", "99  99"};
         String[] thirdLineAscii =  {"00  00", "  11  ","222222", "333333", "444444", "555555", "666666", "    77", "888888", "999999"};
@@ -63,7 +63,70 @@ public class InputOutput {
         String entry = scanner.nextLine();
         String sbs = String.valueOf(sb);
         if (sbs.equals(entry)) {
-            System.out.println("Correct! account created successfully!");
+            return true;
+        }
+        else {
+            System.out.println("Incorrect! please repeat!");
+            return false;
+        }
+    }
+    public static boolean asciiMath() {
+        Random random = new Random();
+        int a = random.nextInt(10) + 1;
+        int b = random.nextInt(10) + 1;
+        int c = random.nextInt(10) + 1;
+        String captcha = null;
+        String[] operations = {"PLUS", "MINUS", "DIVIDED BY", "TIMES"};
+        int d = random.nextInt(4);
+        int e = 0;
+        if (d == 0) {
+            e = b + c;
+        }
+        if (d == 1) {
+            e = b - c;
+        }
+        if (d == 2) {
+            e = b / c;
+        }
+        if (d == 3) {
+            e = b * c;
+        }
+        int f = random.nextInt(4);
+        int g = random.nextInt(2);
+        int h = 0;
+        if (f == 0) {
+            h = a + e;
+            captcha = Integer.toString(a) + " " + "PLUS" + " (" + Integer.toString(b) + " " +operations[d] + " " + Integer.toString(c)+") = ";
+        }
+        if (f == 2) {
+            h = a * e;
+            captcha = Integer.toString(a) + " " + "TIMES" + " (" + Integer.toString(b) + " " +operations[d] + " " + Integer.toString(c)+") = ";
+
+        }
+        if (f == 1) {
+            if (g == 0) {
+                h = a - e;
+                captcha = Integer.toString(a) + " " + "MINUS" + " (" + Integer.toString(b) + " " +operations[d] + " " + Integer.toString(c)+") = ";
+            }
+            else {
+                h = e - a;
+                captcha ="(" + Integer.toString(b) + " " +operations[d] + " " + Integer.toString(c)+")" + " MINUS " + Integer.toString(a) + " =";
+            }
+        }
+        if (f == 3) {
+            if (g == 0) {
+                h = a / e;
+                captcha = Integer.toString(a) + " " + "DIVIDED BY" + " (" + Integer.toString(b) + " " +operations[d] + " " + Integer.toString(c)+") = ";
+
+            }
+            else {
+                h = e / a;
+                captcha = "(" + Integer.toString(b) + " " +operations[d] + " " + Integer.toString(c)+") " + "DIVIDED BY" + " " + Integer.toString(a) + " = ";
+            }
+        }
+        System.out.println(captcha);
+        int answer = Integer.parseInt(scanner.nextLine());
+        if (answer == h) {
             return true;
         }
         else {
@@ -75,7 +138,7 @@ public class InputOutput {
     {
         String entry;
         entry = scanner.nextLine();
-        Pattern[] patterns = new Pattern[9];
+        Pattern[] patterns = new Pattern[10];
         patterns[0] = Pattern.compile("^user create -u \\S+ -p \\S{8,} \\S{8,} -email \\S+@\\S+.com -n \\S+$");
         patterns[1] = Pattern.compile("^user login -u \\S+ -p \\S+$");
         patterns[2] = Pattern.compile("^Forgot my password -u \\S+$");
@@ -85,9 +148,8 @@ public class InputOutput {
         patterns[6] = Pattern.compile("^Profile change -n \\S+$");
         patterns[7] = Pattern.compile("^Profile change -e \\S+$");
         patterns[8] = Pattern.compile("^Profile change password -o \\S+ -n \\S+$");
-
-
-        Matcher[] matchers = new Matcher[9];
+        patterns[9] = Pattern.compile("^-login admin adminpass$");
+        Matcher[] matchers = new Matcher[10];
         while(!entry.equals("Exit"))
         {
         for(int i = 0; i < matchers.length; i++)
@@ -139,26 +201,17 @@ public class InputOutput {
         else if (matchers[8].find()) {
             changePass(entry.split("\\s+"));
         }
+        else if(matchers[9].find())
+        {
+            Admin.starts();
+        }
 
 
             entry = scanner.nextLine();
 
         }
     }
-    // sign up barb
-//    public void signup(String[] inputs)
-//    {
-//        if(!inputs[3].matches("[a-zA-Z0-9_]+"))
-//        {
-//            System.out.println("Invalid Username");
-//        }
-//        else if(!inputs[5].equals(inputs[6]))
-//        {
-//            System.out.println("Passwords do not match");
-//        }
-//
-//    }
-
+    //make this shi its own class
     public void login(String[] inputs)
     {
         Boolean flag = false;
@@ -419,8 +472,21 @@ public class InputOutput {
         String questionNumber = newMatcher.group("QuestionNumber");
         String answer = newMatcher.group("Answer");
         String answerConfirmation = newMatcher.group("AnswerConfirmation");
-        while (!asciiArt()) {}
-        User newUser = new User(email, username, password, questionNumber, answer, answerConfirmation);
+        Random random = new Random();
+        int f = random.nextInt(2);
+        if (f == 0) {
+            while (!asciiMath()) {
+
+            }
+        }
+        else {
+            while (!asciiArt()) {
+
+            }
+        }
+        System.out.println("Correct! account created successfully!");
+//        System.out.println(questionNumber + " " + answer + " " + answerConfirmation);
+        User newUser = new User(email, username, password, questionNumber, answer, nickname);
         User.users.add(newUser);
     }
 
@@ -447,10 +513,10 @@ public class InputOutput {
         System.out.println("HI");
         String[] passwords = new String[5];
         passwords[0] = "K05xher4g3";
-        passwords[1] = "fhn13ca01";
-        passwords[2] = "ionffvbe1";
-        passwords[3] = "mbcpa2179";
-        passwords[4] = "nompngh0982";
+        passwords[1] = "fHn13ca01";
+        passwords[2] = "ioNffvbe1";
+        passwords[3] = "mBcpa2179";
+        passwords[4] = "nompNgh0982";
         int indicator = (int)Math.floor(Math.random() * 5);
         String password = passwords[indicator];
         System.out.println("Your random password: " + password);
@@ -466,14 +532,27 @@ public class InputOutput {
         System.out.println("• 3-What was the name of your first pet?");
         String entry = scanner.nextLine();
         Matcher newMatcher = null;
-        if (entry.matches("question pick -q (?<QusetionNumber>[\\s\\S]*) -a (?<Answe>[\\s\\S]*) -c (?<AnswerConfirmation>[\\s\\S]*)")) {
+        if (entry.matches("question pick -q (?<QusetionNumber>[\\s\\S]*) -a (?<Answer>[\\s\\S]*) -c (?<AnswerConfirmation>[\\s\\S]*)")) {
             newMatcher = getCommandMatcher(entry,"question pick -q (?<QuestionNumber>[\\s\\S]*) -a (?<Answer>[\\s\\S]*) -c (?<AnswerConfirmation>[\\s\\S]*)");
             newMatcher.find();
         }
         String questionNumber = newMatcher.group("QuestionNumber");
         String answer = newMatcher.group("Answer");
         String answerConfirmation = newMatcher.group("AnswerConfirmation");
-        User newUser = new User(email, username, password, questionNumber, answer, answerConfirmation);
+        Random random = new Random();
+        int f = random.nextInt(2);
+        if (f == 0) {
+            while (!asciiMath()) {
+
+            }
+        }
+        else {
+            while (!asciiArt()) {
+
+            }
+        }
+        System.out.println("Correct! account created successfully!");
+        User newUser = new User(email, username, password, questionNumber, answer, nickname);
         User.users.add(newUser);
     }
     public static Matcher getCommandMatcher(String input, String regex)
