@@ -87,7 +87,15 @@ public class Admin {
         upgrade_level = Integer.parseInt(scanner.nextLine());
         System.out.println("Enter upgrade cost");
         upgrade_cost = Integer.parseInt(scanner.nextLine());
-        Cards card = new Cards(name,att_def,duration,damage,upgrade_level,upgrade_cost);
+        System.out.println("Enter price");
+        int price = Integer.parseInt(scanner.nextLine());
+        System.out.println("Enter number");
+        int number = Integer.parseInt(scanner.nextLine());
+        System.out.println("Enter colour");
+        int colour = Integer.parseInt(scanner.nextLine());
+
+
+        Cards card = new Cards(number, name,att_def,duration,damage,upgrade_level,upgrade_cost, price, colour);
         Cards.cards.add(card);
         System.out.println("Card added successfully");
     }
