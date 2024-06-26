@@ -180,7 +180,7 @@ public class Admin {
     public static void viewplayer()
     {
         for (int i = 0; i < User.users.size(); i++) {
-            System.out.println((1+i) +". name:"+User.users.get(i).getUsername() +"\n mail: "+User.users.get(i).getMail()+"\n level:"+User.users.get(i).getLevel()+"\n nickname:"+User.users.get(i).getNickname()+"\n security question: "+User.users.get(i).getSec_answer()+"\n security answer:"+User.users.get(i).getSec_answer());
+            System.out.println((1+i) +". name:"+User.users.get(i).getUsername() +"\n mail: "+User.users.get(i).getMail()+"\n level:"+User.users.get(i).getLevel()+"\n nickname:"+User.users.get(i).getNickname()+"\n security question: "+User.users.get(i).getSec_question()+"\n security answer:"+User.users.get(i).getSec_answer());
 
         }
     }

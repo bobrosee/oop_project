@@ -21,8 +21,6 @@ public class InputOutput {
         patterns[7] = Pattern.compile("^Profile change -e \\S+$");
         patterns[8] = Pattern.compile("^Profile change password -o \\S+ -n \\S+$");
         patterns[9] = Pattern.compile("^-login admin adminpass$");
-
-
         Matcher[] matchers = new Matcher[10];
         while(!entry.equals("Exit"))
         {
@@ -85,6 +83,7 @@ public class InputOutput {
 
         }
     }
+    //make this shi its own class
     public void login(String[] inputs)
     {
         Boolean flag = false;
@@ -310,14 +309,14 @@ public class InputOutput {
         System.out.println("• 3-What was the name of your first pet?");
         String entry = scanner.nextLine();
         Matcher newMatcher = null;
-        if (entry.matches("question pick -q (?<QusetionNumber>[\\S]*) -a (?<Answe>[\\S]*) -c (?<AnswerConfirmation>[\\S]*)")) {
+        if (entry.matches("question pick -q (?<QusetionNumber>[\\S]*) -a (?<Answer>[\\S]*) -c (?<AnswerConfirmation>[\\S]*)")) {
             newMatcher = getCommandMatcher(entry,"question pick -q (?<QuestionNumber>[\\S]*) -a (?<Answer>[\\S]*) -c (?<AnswerConfirmation>[\\S]*)");
             newMatcher.find();
         }
         String questionNumber = newMatcher.group("QuestionNumber");
         String answer = newMatcher.group("Answer");
         String answerConfirmation = newMatcher.group("AnswerConfirmation");
-        System.out.println(questionNumber + " " + answer + " " + answerConfirmation);
+//        System.out.println(questionNumber + " " + answer + " " + answerConfirmation);
         User newUser = new User(email, username, password, questionNumber, answer, nickname);
         User.users.add(newUser);
     }
@@ -364,7 +363,7 @@ public class InputOutput {
         System.out.println("• 3-What was the name of your first pet?");
         String entry = scanner.nextLine();
         Matcher newMatcher = null;
-        if (entry.matches("question pick -q (?<QusetionNumber>[\\s\\S]*) -a (?<Answe>[\\s\\S]*) -c (?<AnswerConfirmation>[\\s\\S]*)")) {
+        if (entry.matches("question pick -q (?<QusetionNumber>[\\s\\S]*) -a (?<Answer>[\\s\\S]*) -c (?<AnswerConfirmation>[\\s\\S]*)")) {
             newMatcher = getCommandMatcher(entry,"question pick -q (?<QuestionNumber>[\\s\\S]*) -a (?<Answer>[\\s\\S]*) -c (?<AnswerConfirmation>[\\s\\S]*)");
             newMatcher.find();
         }
