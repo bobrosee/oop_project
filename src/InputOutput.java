@@ -4,6 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 public class InputOutput {
     static Scanner scanner;
+
     User firstUser = null;
     User secondUser = null;
 
