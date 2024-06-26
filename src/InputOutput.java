@@ -4,9 +4,72 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 public class InputOutput {
     Scanner scanner;
+    User firstUser = null;
+    User secondUser = null;
 
     public InputOutput(Scanner scanner) {
         this.scanner = scanner;
+    }
+    public boolean asciiArt() {
+        String[] firstLineAscii =  {"000000", "1111  ","222222", "333333", "44  44", "555555", "666666", "777777", "888888", "999999"};
+        String[] secondLineAscii = {"00  00", "  11  ","     2", "    33", "44  44", "55    ", "66    ", "    77", "88  88", "99  99"};
+        String[] thirdLineAscii =  {"00  00", "  11  ","222222", "333333", "444444", "555555", "666666", "    77", "888888", "999999"};
+        String[] fourthLineAscii = {"00  00", "  11  ","2     ", "    33", "    44", "    55", "66  66", "    77", "88  88", "    99"};
+        String[] fifthLineAscii =  {"000000", "111111","222222", "333333", "    44", "555555", "666666", "    77", "888888", "999999"};
+        Random random = new Random();
+
+        int length = 5 + random.nextInt(3);
+        StringBuilder sb = new StringBuilder(length);
+        for (int i = 0; i < length; i++) {
+            int digit = random.nextInt(10);
+            sb.append(digit);
+        }
+        ArrayList<String> firstLine = new ArrayList<String>();
+        ArrayList<String> secondLine = new ArrayList<String>();
+        ArrayList<String> thirdLine = new ArrayList<String>();
+        ArrayList<String> fourthLine = new ArrayList<String>();
+        ArrayList<String> fifthLine = new ArrayList<String>();
+        for (int i = 0; i < sb.length(); i++) {
+            char c = sb.charAt(i);
+            int d = (c-'0');
+            firstLine.add(firstLineAscii[d] + " ");
+            secondLine.add(secondLineAscii[d] + " ");
+            thirdLine.add(thirdLineAscii[d] + " ");
+            fourthLine.add(fourthLineAscii[d] + " ");
+            fifthLine.add(fifthLineAscii[d] + " ");
+        }
+        for (int i = 0 ; i < length; i++) {
+            System.out.print(firstLine.get(i));
+        }
+        System.out.println();
+        for (int i = 0 ; i < length; i++) {
+            System.out.print(secondLine.get(i));
+        }
+        System.out.println();
+
+        for (int i = 0 ; i < length; i++) {
+            System.out.print(thirdLine.get(i));
+        }
+        System.out.println();
+
+        for (int i = 0 ; i < length; i++) {
+            System.out.print(fourthLine.get(i));
+        }
+        System.out.println();
+        for (int i = 0 ; i < length; i++) {
+            System.out.print(fifthLine.get(i));
+        }
+        System.out.println();
+        String entry = scanner.nextLine();
+        String sbs = String.valueOf(sb);
+        if (sbs.equals(entry)) {
+            System.out.println("Correct! account created successfully!");
+            return true;
+        }
+        else {
+            System.out.println("Incorrect! please repeat!");
+            return false;
+        }
     }
     public void start()
     {
@@ -124,6 +187,34 @@ public class InputOutput {
         }
         //add time
     }
+    public void secondLogin(String[] inputs) {
+        firstUser = User.users.get(User.logged);
+        String username = inputs[3];
+        String password = inputs[5];
+        boolean usernameFlag = false;
+        boolean passwordFlag = false;
+        for (User user : User.users) {
+            if (user.getUsername().equals(username)){
+                usernameFlag = true;
+                if (user.getPassword().equals(password)){
+                    passwordFlag = true;
+                    secondUser = user;
+                }
+            }
+        }
+        if (!usernameFlag) {
+            System.out.println("Username doesn't exist!");
+            return;
+        }
+        if (!passwordFlag) {
+            System.out.println("Password and Username don’t match!");
+            return;
+        }
+        if (passwordFlag && usernameFlag) {
+            System.out.println("user logged in successfully!");
+        }
+    }
+
     public void forgetPass(String[] inputs)
     {
         String answer;
@@ -321,14 +412,14 @@ public class InputOutput {
         System.out.println("• 3-What was the name of your first pet?");
         String entry = scanner.nextLine();
         Matcher newMatcher = null;
-        if (entry.matches("question pick -q (?<QusetionNumber>[\\S]*) -a (?<Answe>[\\S]*) -c (?<AnswerConfirmation>[\\S]*)")) {
+        if (entry.matches("question pick -q (?<QusetionNumber>[\\S]*) -a (?<Answer>[\\S]*) -c (?<AnswerConfirmation>[\\S]*)")) {
             newMatcher = getCommandMatcher(entry,"question pick -q (?<QuestionNumber>[\\S]*) -a (?<Answer>[\\S]*) -c (?<AnswerConfirmation>[\\S]*)");
             newMatcher.find();
         }
         String questionNumber = newMatcher.group("QuestionNumber");
         String answer = newMatcher.group("Answer");
         String answerConfirmation = newMatcher.group("AnswerConfirmation");
-        System.out.println(questionNumber + " " + answer + " " + answerConfirmation);
+        while (!asciiArt()) {}
         User newUser = new User(email, username, password, questionNumber, answer, answerConfirmation);
         User.users.add(newUser);
     }
