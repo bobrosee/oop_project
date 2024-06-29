@@ -1,3 +1,4 @@
+import java.sql.PreparedStatement;
 import java.util.*;
 import java.util.regex.*;
 import java.util.regex.Matcher;
@@ -6,29 +7,34 @@ import org.w3c.dom.*;
 import javax.xml.parsers.*;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Collections;
-import java.util.List;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.*;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import java.io.File;
-import java.util.List;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 
 public class InputOutput {
     static Scanner scanner;
-
+    static Connection connection;
     User firstUser = null;
     User secondUser = null;
 
     public InputOutput(Scanner scanner) {
         this.scanner = scanner;
     }
+
+
+    public static void connectToDatabase(){
+        try {
+            connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\moalna\\IdeaProjects\\oop_project\\identifier.sqlite");
+            //System.out.println("Connection to SQLite has been established.");
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+
+
     public static boolean asciiArt() {
         String[] firstLineAscii =  {"000000", "1111  ","222222", "333333", "44  44", "555555", "666666", "777777", "888888", "999999"};
         String[] secondLineAscii = {"00  00", "  11  ","     2", "    33", "44  44", "55    ", "66    ", "    77", "88  88", "99  99"};
@@ -503,6 +509,7 @@ public class InputOutput {
 
             }
         }
+        connectToDatabase();
         System.out.println("Correct! account created successfully!");
 //        System.out.println(questionNumber + " " + answer + " " + answerConfirmation);
         User newUser = new User(email, username, password, questionNumber, answer, nickname);
@@ -580,6 +587,10 @@ public class InputOutput {
         Matcher matcher = pattern.matcher(input);
         return matcher;
     }
+
+
+
+
 
 
 }
